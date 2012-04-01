@@ -47,6 +47,12 @@ extern char *sys_errlist[];
 #include "xmalloc.h"
 #include "lstree.h"
 
+#if defined(_WIN32)
+# define STRDUP     _strdup
+#else
+# define STRDUP     strdup
+#endif
+
 /* */
 extern void usage();
 extern void add_fnmatch();
@@ -85,8 +91,7 @@ char *filter_dir[] = {
 };
 
 void
-usage(progname)
-    char *progname;
+usage(char *progname)
 {
     fprintf(stderr, "usage : %s [options] directory ...\n", progname);
     fprintf(stderr, "  options\n");
@@ -114,9 +119,7 @@ usage(progname)
 }
 
 int
-main(argc, argv)
-    int argc;
-    char *argv[];
+main(int argc, char *argv[])
 {
     int i;
     int ch;
@@ -321,8 +324,7 @@ main(argc, argv)
 }
 
 void
-add_fnmatch(pattern)
-    char *pattern;
+add_fnmatch(char *pattern)
 {
     int i;
     char **p = (char **)xmalloc(sizeof(char *) * (opt_count_fnmatch + 1));
@@ -339,7 +341,7 @@ add_fnmatch(pattern)
 }
 
 void
-fnmatch_information()
+fnmatch_information(void)
 {
     int i;
 
@@ -350,8 +352,7 @@ fnmatch_information()
 }
 
 void
-pattern_file(filename)
-    char *filename;
+pattern_file(char *filename)
 {
     FILE *fp = fopen(filename, "r");
     size_t plen;
@@ -375,7 +376,7 @@ pattern_file(filename)
 
         if (plen > 0)
         {
-            add_fnmatch(strdup(lbuf));
+            add_fnmatch(STRDUP(lbuf));
         }
     }
     fclose(fp);

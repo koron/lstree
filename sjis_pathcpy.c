@@ -16,9 +16,7 @@ static char _rcs_id[] = "@(#) $Id: sjis_pathcpy.c,v 2.1 1999/09/10 01:24:10 mit 
 #include "lstree.h"
 
 char *
-sjis_pathcpy(dst, src)
-    char *dst;
-    char *src;
+sjis_pathcpy(char *dst, char *src)
 {
     int wdrv = 0;
     char *wpath = NULL;

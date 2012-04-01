@@ -30,9 +30,7 @@ static int wild_match_charclass1(/* char **wildcardp, int tc */);
 int level = 0;
 
 int
-debug_wild_match(wildcard, target)
-    char *wildcard;
-    char *target;
+debug_wild_match(char *wildcard, char *target)
 {
     int ret;
     int i;
@@ -55,9 +53,7 @@ debug_wild_match(wildcard, target)
 #endif
 
 int
-wild_match(wildcard, target)
-    char *wildcard;
-    char *target;
+wild_match(char *wildcard, char *target)
 {
 #ifdef DEBUG_SELF
 #  define wild_match(w, t) debug_wild_match(w, t)
@@ -101,9 +97,7 @@ wild_match(wildcard, target)
 }
 
 int
-wild_match_charclass(wildcard, target)
-    char *wildcard;
-    char *target;
+wild_match_charclass(char *wildcard, char *target)
 {
     int status;
     int rev = false;
@@ -127,9 +121,7 @@ wild_match_charclass(wildcard, target)
 }
 
 static int
-wild_match_charclass1(wildcardp, tc)
-    char **wildcardp;
-    int tc;
+wild_match_charclass1(char **wildcardp, int tc)
 {
     int cc = *(*wildcardp)++;
 

@@ -72,8 +72,7 @@ extern int   wild_match(/* char *wild, char target */);
 extern int   is_rootpath(/* char *path */);
 
 int
-print_nodeinfo(node)
-    nodeinfo_t *node;
+print_nodeinfo(nodeinfo_t *node)
 {
     nodeinfo_t *ptr = node;
 
@@ -117,8 +116,7 @@ print_node_count()
 }
 
 void
-print_node_type(node)
-    nodeinfo_t *node;
+print_node_type(nodeinfo_t *node)
 {
     if (IS_DIR(node))
     {
@@ -175,8 +173,7 @@ print_node_type(node)
 }
 
 char *
-is_match_filename(name)
-    char *name;
+is_match_filename(char *name)
 {
     int i;
 
@@ -195,8 +192,7 @@ is_match_filename(name)
 }
 
     char*
-is_filter_dir(name)
-    char *name;
+is_filter_dir(char *name)
 {
     int i;
     for (i = 0; filter_dir[i]; ++i)
@@ -211,8 +207,7 @@ char *monthname[] = {
 };
 
 void
-print_tree(node)
-    nodeinfo_t *node;
+print_tree(nodeinfo_t *node)
 {
     size_t left;
     struct tm *tp;
@@ -329,8 +324,7 @@ print_tree(node)
 }
 
 size_t
-print_dir_indent(node)
-    nodeinfo_t *node;
+print_dir_indent(nodeinfo_t *node)
 {
     size_t left;
 
@@ -355,8 +349,7 @@ print_dir_indent(node)
 }
 
 char *
-make_URL(node)
-    nodeinfo_t *node;
+make_URL(nodeinfo_t *node)
 {
     char *pathname;
 
@@ -397,8 +390,7 @@ make_URL(node)
 #define HTML_NS_GEN "internal-gopher-unknown"
 
 void
-HTML_A(node)
-    nodeinfo_t *node;
+HTML_A(nodeinfo_t *node)
 {
     char *pathname = make_URL(node);
 

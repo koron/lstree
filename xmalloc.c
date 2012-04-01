@@ -10,6 +10,7 @@ static char _rcs_id[] = "$Id: xmalloc.c,v 2.1 1999/09/10 01:24:11 mit Exp $";
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "xmalloc.h"
 
 #define ROUND_MIN_SIZE   32
@@ -42,8 +43,8 @@ typedef struct header_t header_t;
 #define in_range(p) ((unsigned char *)(p) >= range_block_low   \
 		     && (unsigned char *)(p) <= range_block_hi)
 
-static unsigned char *range_block_low = (unsigned char *)0xffffffff;
-static unsigned char *range_block_hi  = (unsigned char *)0x00000000;
+static unsigned char *range_block_low = ((unsigned char *)0) - 1;
+static unsigned char *range_block_hi  = (unsigned char *)0;
 static header_t *free_memory_block[8] = { NULL, NULL, NULL, NULL,
                                           NULL, NULL, NULL, NULL };
 static unsigned int cur_free_count[8]    = { 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -53,8 +54,7 @@ static unsigned int total_alloc_count[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 static unsigned int total_alloc_other = 0;
 
 char *
-xmalloc(size)
-    int size;
+xmalloc(int size)
 {
     char *rptr;
     int xsize = size + sizeof(header_t);
@@ -127,14 +127,13 @@ xmalloc(size)
 }
 
 void
-xfree(p)
-    char *p;
+xfree(char *p)
 {
     header_t *ptr = (header_t *)(p - sizeof(header_t));
 
     if (in_range(p) && H_MAGIC(ptr) == MAGIC_NUMBER)
     {
-        int idx;
+        int idx = 0;
 
 #if 0
         printf("( %08x, %08x )\n", range_block_low, range_block_hi);
@@ -170,9 +169,7 @@ xfree(p)
 }
 
 char *
-xcalloc(num, size)
-    int num;
-    int size;
+xcalloc(int num, int size)
 {
     int sz = size * num;
     char *ptr = xmalloc(sz);
@@ -193,9 +190,7 @@ xcalloc(num, size)
 }
 
 char *
-xrealloc(p, size)
-    char *p;
-    size_t size;
+xrealloc(char *p, size_t size)
 {
     header_t *ptr = (header_t *)(p - sizeof(header_t));
 
@@ -210,7 +205,7 @@ xrealloc(p, size)
         }
         else
         {
-            newptr = xmalloc(size);
+            newptr = xmalloc((int)size);
             xfree(p);
             return newptr;
         }

@@ -60,7 +60,7 @@ readdir(DIR *dirp)
     /* get directory info */
     if (dirp->dd_status == DD_STATUS_NONE)
     {
-        int lastchar;
+        int lastchar = '\0';
         char *s;
 
         if (_fullpath(pathname, dirp->dd_dirname, FILENAME_MAX) == NULL)
@@ -82,7 +82,7 @@ readdir(DIR *dirp)
         strcat(pathname, "*");
 
         h = FindFirstFile(pathname, &find_data);
-        if (h == (HANDLE)-1)
+        if (h == INVALID_HANDLE_VALUE)
         {
             dirp->dd_status = DD_STATUS_ERROR;
             return NULL;

@@ -60,8 +60,7 @@ extern int   sort_by_size(/* struct nodeinfo_t **a, struct nodeinfo_t **b */);
 
 
 int
-is_rootpath(pathname)
-    char *pathname;
+is_rootpath(char *pathname)
 {
 #ifdef UNIX
     return strcmp(pathname, "/") == 0;
@@ -71,8 +70,7 @@ is_rootpath(pathname)
 }
 
 char *
-make_pathname(node)
-    nodeinfo_t *node;
+make_pathname(nodeinfo_t *node)
 {
     char *pathname;
 
@@ -102,8 +100,7 @@ make_pathname(node)
  * directory tree walk
  */
 int
-do_list_tree(parent)
-    nodeinfo_t *parent;
+do_list_tree(nodeinfo_t *parent)
 {
     DIR *dirptr;
     struct dirent *dp;
@@ -167,8 +164,7 @@ do_list_tree(parent)
 }
 
 int
-get_depth(node)
-    nodeinfo_t *node;
+get_depth(nodeinfo_t *node)
 {
     int depth = 0;
 
@@ -181,8 +177,7 @@ get_depth(node)
 }
 
 static void
-dump_stack(node)
-    nodeinfo_t *node;
+dump_stack(nodeinfo_t *node)
 {
     printf("-----------------------------------------------\n");
     while (node)
@@ -197,9 +192,7 @@ dump_stack(node)
  * Manage node information
  */
 nodeinfo_t *
-alloc_nodeinfo(parent, node_name)
-    nodeinfo_t *parent;
-    char *node_name;
+alloc_nodeinfo(nodeinfo_t *parent, char *node_name)
 {
     nodeinfo_t *node = (nodeinfo_t *)xcalloc(1, sizeof(nodeinfo_t));
     char *parent_path = (char *)make_pathname(parent);
@@ -242,8 +235,7 @@ alloc_nodeinfo(parent, node_name)
 }
 
 void
-free_nodeinfo(node)
-    nodeinfo_t *node;
+free_nodeinfo(nodeinfo_t *node)
 {
     nodeinfo_t *ptr = node;
 
@@ -269,9 +261,7 @@ free_nodeinfo(node)
  *
  */
 void
-sort_node(nodestack, func)
-    nodestack_t *nodestack;
-    int (*func)(const void*, const void*);
+sort_node(nodestack_t *nodestack, int (*func)(const void*, const void*))
 {
     int i;
     nodeinfo_t *ptr;
@@ -301,9 +291,7 @@ sort_node(nodestack, func)
  * sort sub functions
  */
 int
-sort_by_name(a, b)
-    struct nodeinfo_t **a;
-    struct nodeinfo_t **b;
+sort_by_name(struct nodeinfo_t **a, struct nodeinfo_t **b)
 {
     if (opt_revsort)
         return strcmp(NODE_NAME(*b), NODE_NAME(*a));
@@ -312,20 +300,16 @@ sort_by_name(a, b)
 }
 
 int
-sort_by_mtime(a, b)
-    struct nodeinfo_t **a;
-    struct nodeinfo_t **b;
+sort_by_mtime(struct nodeinfo_t **a, struct nodeinfo_t **b)
 {
     if (opt_revsort)
-        return NODE_MTIME(*a) - NODE_MTIME(*b);
+        return (int)(NODE_MTIME(*a) - NODE_MTIME(*b));
     else
-        return NODE_MTIME(*b) - NODE_MTIME(*a);
+        return (int)(NODE_MTIME(*b) - NODE_MTIME(*a));
 }
 
 int
-sort_by_size(a, b)
-    struct nodeinfo_t **a;
-    struct nodeinfo_t **b;
+sort_by_size(struct nodeinfo_t **a, struct nodeinfo_t **b)
 {
     if (opt_revsort)
         return NODE_SIZE(*a) - NODE_SIZE(*b);

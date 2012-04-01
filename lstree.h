@@ -4,16 +4,16 @@
  */
 
 #ifndef lint
-static char _rcs_lstree_h[] = "$Id: lstree.h,v 2.1 1999/09/10 01:24:09 mit Exp $" ;
+static char _rcs_lstree_h[] = "$Id: lstree.h,v 2.1 1999/09/10 01:24:09 mit Exp $";
 #endif
 
 #ifdef UNIX
-#define OPT_STRING "dltvw:V:zrHD:f:F:"
+#define OPT_STRING "adltvw:V:zrHD:f:F:"
 #define DIR_SEPARATER "/"
 #endif
 
 #ifdef WIN32
-#define OPT_STRING "dltvw:sSV:zrHD:f:F:"
+#define OPT_STRING "adltvw:sSV:zrHD:f:F:"
 #define DIR_SEPARATER "\\"
 #define getcwd _getcwd
 #define lstat stat
@@ -40,45 +40,48 @@ static char _rcs_lstree_h[] = "$Id: lstree.h,v 2.1 1999/09/10 01:24:09 mit Exp $
 #define bzero(ptr, len) memset((ptr), 0, (len))
 
 /* getopt() */
-extern char *optarg ;
-extern int optind ;
+extern char *optarg;
+extern int optind;
 
 /*
  * Command Option flag, value.
  */
-extern int opt_verbose ;
-extern int opt_longprint ;
-extern int opt_dironly ;
-extern int opt_revsort ;
-extern int opt_ncolumns ;
-extern int opt_maxdepth ;
-extern int opt_html ;
+extern int opt_verbose;
+extern int opt_longprint;
+extern int opt_dironly;
+extern int opt_revsort;
+extern int opt_ncolumns;
+extern int opt_maxdepth;
+extern int opt_html;
 #ifdef _WIN32
-extern int opt_withdosshort ;
+extern int opt_withdosshort;
 #endif
-extern int opt_count_fnmatch ;
-extern char **opt_fnmatch ;
+extern int opt_count_fnmatch;
+extern char **opt_fnmatch;
+extern int opt_alldir;
 
-extern int (*sort_function)(/* nodeinfo_t *, nodeinfo_t * */) ;
+extern int (*sort_function)(/* nodeinfo_t *, nodeinfo_t * */);
+
+extern char *filter_dir[];
 
 struct nodeinfo_t
 {
-  int    flag ;
+    int    flag;
 #define NODE_LAST (1 << 0)
 #define NODE_INFO (1 << 1)
-  char   *name ;
-  char   *symlink ;
+    char   *name;
+    char   *symlink;
 #ifdef _WIN32
-  char   *dosname ;
-  char   drive ;	/* 'A', 'B', ... or 'a', 'b', ... */
-  char   cur_drive ;
+    char   *dosname;
+    char   drive;	/* 'A', 'B', ... or 'a', 'b', ... */
+    char   cur_drive;
 #endif
-  struct stat sb ;
-  struct nodeinfo_t *parent ;
-  struct nodeinfo_t *link ;
-} ;
+    struct stat sb;
+    struct nodeinfo_t *parent;
+    struct nodeinfo_t *link;
+};
 
-typedef struct nodeinfo_t nodeinfo_t ;
+typedef struct nodeinfo_t nodeinfo_t;
 
 #define NODE_FLAG_SET(ptr, val) (((ptr)->flag) |= (val))
 #define NODE_FLAG_CLR(ptr, val) (((ptr)->flag) &= ~(val))
@@ -112,32 +115,33 @@ typedef struct nodeinfo_t nodeinfo_t ;
 #define IS_SOCK(ptr) ((NODE_TYPE(ptr) & S_IFMT) == S_IFSOCK)
 #endif
 
-extern nodeinfo_t *alloc_nodeinfo(/* nodeinfo_t *parent, char *node_name */) ;
-extern void        free_nodeinfo(/* nodeinfo_t *ptr */) ;
+extern nodeinfo_t *alloc_nodeinfo(/* nodeinfo_t *parent, char *node_name */);
+extern void        free_nodeinfo(/* nodeinfo_t *ptr */);
 
 struct nodestack_t
 {
-  int count ;
-  nodeinfo_t *link ;
-} ;
+    int count;
+    nodeinfo_t *link;
+};
 #define NODESTACK_COUNT(ptr) ((ptr)->count)
 #define NODESTACK_LINK(ptr)  ((ptr)->link)
 
 #define alloc_nodestack() (nodestack_t *)xcalloc(1, sizeof(nodestack_t))
 #define free_nodestack(ptr) xfree(ptr)
 
-typedef struct nodestack_t nodestack_t ;
+typedef struct nodestack_t nodestack_t;
 
-extern int print_nodeinfo() ;
-extern void sort_node() ;
-extern int sort_by_name() ;
-extern int sort_by_mtime() ;
-extern int sort_by_size() ;
-extern int get_depth() ;
-extern void print_node_count() ;
-extern char *sjis_pathcpy() ;
+extern int print_nodeinfo();
+extern void sort_node();
+extern int sort_by_name();
+extern int sort_by_mtime();
+extern int sort_by_size();
+extern int get_depth();
+extern void print_node_count();
+extern char *sjis_pathcpy();
+extern int is_rootpath();
 
-extern char *xstrdup() ;
+extern char *xstrdup();
 /*
  * ends
  */

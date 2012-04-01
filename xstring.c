@@ -3,21 +3,22 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "xmalloc.h"
 
 char *
 xstrdup(str)
-     char *str ;
+    char *str;
 {
-  char *ptr = (char *)xmalloc(strlen(str) + 1) ;
+    char *ptr = (char *)xmalloc(strlen(str) + 1);
 
-  if (ptr == NULL)
+    if (ptr == NULL)
     {
-      /* NOTREACHED */
-      abort() ;
+        /* NOTREACHED */
+        abort();
     }
-  strcpy(ptr, str) ;
-  return ptr ;
+    strcpy(ptr, str);
+    return ptr;
 }
 
 /*

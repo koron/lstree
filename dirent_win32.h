@@ -7,7 +7,7 @@
 #ifdef _WIN32
 
 #ifndef lint
-static char _dirent_h[] = "$Id: dirent_win32.h,v 2.1 1999/09/10 01:24:07 mit Exp $" ;
+static char _dirent_h[] = "$Id: dirent_win32.h,v 2.1 1999/09/10 01:24:07 mit Exp $";
 #endif
 
 #ifndef PATH_MAX
@@ -19,26 +19,26 @@ static char _dirent_h[] = "$Id: dirent_win32.h,v 2.1 1999/09/10 01:24:07 mit Exp
 
 struct _dirdesc
 {
-  HANDLE dd_handle ;
-  int    dd_status ; // status with count
+    HANDLE dd_handle;
+    int    dd_status; // status with count
 #define DD_STATUS_NONE  ( 0)
 #define DD_STATUS_EOF   (-1)
 #define DD_STATUS_ERROR (-2)
-  char   dd_dirname[MAX_PATHNAME] ;
-} ;
-typedef struct _dirdesc DIR ;
+    char   dd_dirname[MAX_PATHNAME];
+};
+typedef struct _dirdesc DIR;
 
 struct dirent
 {
-  int  d_namelen ;
-  char d_dosname[14] ;
-  char d_longfilename[MAX_PATHNAME] ;
+    size_t  d_namelen;
+    char d_dosname[14];
+    char d_longfilename[MAX_PATHNAME];
 #define d_name d_longfilename
-} ;
+};
 
-extern DIR *opendir(const char *path) ;
-extern void closedir(DIR *dirp) ;
-extern struct dirent *readdir(DIR *dirp) ;
+extern DIR *opendir(const char *path);
+extern void closedir(DIR *dirp);
+extern struct dirent *readdir(DIR *dirp);
 
 #endif /* _WIN32 */
 /*

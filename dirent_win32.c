@@ -7,7 +7,7 @@
 
 #ifdef _WIN32
 #ifndef lint
-static char _rcs_id[] = "$Id: dirent_win32.c,v 2.1 1999/09/10 01:24:07 mit Exp $" ;
+static char _rcs_id[] = "$Id: dirent_win32.c,v 2.1 1999/09/10 01:24:07 mit Exp $";
 #endif
 
 #include <stdio.h>
@@ -25,96 +25,96 @@ static char _rcs_id[] = "$Id: dirent_win32.c,v 2.1 1999/09/10 01:24:07 mit Exp $
 DIR *
 opendir(const char *path)
 {
-  DIR *ptr = (DIR *)calloc(sizeof(DIR), 1) ;
+    DIR *ptr = (DIR *)calloc(sizeof(DIR), 1);
 
-  /* allocate directory entry */
-  if (ptr == NULL)
+    /* allocate directory entry */
+    if (ptr == NULL)
     {
-      return NULL ;
+        return NULL;
     }
-  ptr->dd_status = DD_STATUS_NONE ;
-  strcpy(ptr->dd_dirname, path) ;
+    ptr->dd_status = DD_STATUS_NONE;
+    strcpy(ptr->dd_dirname, path);
 
-  return ptr ;
+    return ptr;
 }
 
 void
 closedir(DIR *ptr)
 {
-  FindClose(ptr->dd_handle) ;
-  free(ptr) ;
+    FindClose(ptr->dd_handle);
+    free(ptr);
 }
 
 struct dirent *
 readdir(DIR *dirp)
 {
-  HANDLE h ;
-  static struct dirent dent ;
-  WIN32_FIND_DATA find_data ;
-  char pathname[FILENAME_MAX] ;
+    HANDLE h;
+    static struct dirent dent;
+    WIN32_FIND_DATA find_data;
+    char pathname[FILENAME_MAX];
 
-  if (dirp->dd_status == DD_STATUS_ERROR
-      || dirp->dd_status == DD_STATUS_EOF)
-    return NULL ;
+    if (dirp->dd_status == DD_STATUS_ERROR
+            || dirp->dd_status == DD_STATUS_EOF)
+        return NULL;
 
-  /* get directory info */
-  if (dirp->dd_status == DD_STATUS_NONE)
+    /* get directory info */
+    if (dirp->dd_status == DD_STATUS_NONE)
     {
-      int lastchar ;
-      char *s ;
+        int lastchar;
+        char *s;
 
-      if (_fullpath(pathname, dirp->dd_dirname, FILENAME_MAX) == NULL)
-	{
-	  dirp->dd_status = DD_STATUS_EOF ;
-	  return NULL ;
-	}
+        if (_fullpath(pathname, dirp->dd_dirname, FILENAME_MAX) == NULL)
+        {
+            dirp->dd_status = DD_STATUS_EOF;
+            return NULL;
+        }
 
-      s = pathname ;
-      while(*s)
-	{
-	  lastchar = *s++ ;
-	  if (is_sjis1(lastchar) && (*s == '\\'))
-	    s++ ;
-	}
+        s = pathname;
+        while (*s)
+        {
+            lastchar = *s++;
+            if (is_sjis1(lastchar) && (*s == '\\'))
+                s++;
+        }
 
-      if (lastchar != '\\' && lastchar != '/')
-	strcat(pathname, "\\") ;
-      strcat(pathname, "*") ;
- 
-      h = FindFirstFile(pathname, &find_data) ;
-      if (h == (HANDLE)-1)
-	{
-	  dirp->dd_status = DD_STATUS_ERROR ;
-	  return NULL ;
-	}
-      dirp->dd_handle = h ;
-      dirp->dd_status++ ;
+        if (lastchar != '\\' && lastchar != '/')
+            strcat(pathname, "\\");
+        strcat(pathname, "*");
+
+        h = FindFirstFile(pathname, &find_data);
+        if (h == (HANDLE)-1)
+        {
+            dirp->dd_status = DD_STATUS_ERROR;
+            return NULL;
+        }
+        dirp->dd_handle = h;
+        dirp->dd_status++;
     }
-  else
+    else
     {
-      if (FindNextFile(dirp->dd_handle, &find_data) == 0)
-	{
-	  dirp->dd_status = DD_STATUS_ERROR ;
-	  return NULL ;
-	}
-      dirp->dd_status++ ;
+        if (FindNextFile(dirp->dd_handle, &find_data) == 0)
+        {
+            dirp->dd_status = DD_STATUS_ERROR;
+            return NULL;
+        }
+        dirp->dd_status++;
     }
 
-  /* make directory entry info */
-  strcpy(dent.d_name, find_data.cFileName) ;
-  dent.d_namelen = strlen(find_data.cFileName) ;
+    /* make directory entry info */
+    strcpy(dent.d_name, find_data.cFileName);
+    dent.d_namelen = strlen(find_data.cFileName);
 
-  if (find_data.cAlternateFileName[0] == '\0')
+    if (find_data.cAlternateFileName[0] == '\0')
     {
-      /* LongFileName same as Short(DOS)FileName */
-      strcpy(dent.d_dosname, find_data.cFileName) ;
+        /* LongFileName same as Short(DOS)FileName */
+        strcpy(dent.d_dosname, find_data.cFileName);
     }
-  else
+    else
     {
-      /* Has short(DOS) filename */
-      strcpy(dent.d_dosname, find_data.cAlternateFileName) ;
+        /* Has short(DOS) filename */
+        strcpy(dent.d_dosname, find_data.cAlternateFileName);
     }
-  return &dent ;
+    return &dent;
 }
 
 #endif /* _WIN32 */

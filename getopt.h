@@ -5,13 +5,13 @@
  * written by Kazuyoshi Michishita
  */
 
-extern char *optarg ;
-extern int optind ;
+extern char *optarg;
+extern int optind;
 
 #ifdef __STDC__
 extern int getopt(int argc,
                   char *argv[],
-		  char *optstring) ;
+                  char *optstring);
 #else
-extern int getopt() ;
+extern int getopt();
 #endif

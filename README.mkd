@@ -1,7 +1,7 @@
 # list tree for UNIX and Windows
 
-This repository is clone of <http://www.yk.rim.or.jp/~unya/lstree/>.
-Please refer original codes to the site.
+This repository is clone of <http://www.yk.rim.or.jp/~unya/lstree/> with some
+enhancements.  Please refer original codes to this site.
 
 # USAGE
 
@@ -28,7 +28,7 @@ usage : lstree [options] directory ...
 
 # COMPILE
 
-## MSVC
+## Compile with MSVC
 
 ```
 $ nmake -f Make_msvc.mak nodebug=1

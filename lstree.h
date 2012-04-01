@@ -3,7 +3,7 @@
  *
  */
 
-#ifndef lint
+#if 0
 static char _rcs_lstree_h[] = "$Id: lstree.h,v 2.1 1999/09/10 01:24:09 mit Exp $";
 #endif
 

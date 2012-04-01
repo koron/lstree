@@ -20,6 +20,8 @@ static char _rcs_id[] = "@(#) $Id: lstree.c,v 2.1 1999/09/10 01:24:09 mit Exp $"
 #include <dirent.h>
 #include <termios.h>
 #include <time.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 #ifdef sun
 extern char *sys_errlist[];

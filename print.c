@@ -13,7 +13,7 @@
     <IMG ALIGN=absbottom BORDER=0 SRC="internal-gopher-unknown">
 */
 
-#ifndef LINT
+#if 0
 static char _rcs_id[] = "$Id: print.c,v 2.1 1999/09/10 01:24:10 mit Exp $";
 #endif
 
@@ -297,7 +297,7 @@ print_tree(nodeinfo_t *node)
 #ifdef __FreeBSD__
         printf(" %10qd", NODE_SIZE(node));
 #else
-        printf(" %10ld", NODE_SIZE(node));
+        printf(" %10zd", NODE_SIZE(node));
 #endif
 
         tp = localtime(&NODE_MTIME(node));

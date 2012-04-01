@@ -13,7 +13,7 @@
 
 #define nul '\0'
 
-#ifndef LINT
+#if 0
 static char _rcs_id[] = "$Id: wildmatch.c,v 2.1 1999/09/10 01:24:11 mit Exp $";
 #endif
 

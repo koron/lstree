@@ -3,7 +3,7 @@
  * by Kazuyoshi Michishita.
  */
 
-#ifndef LINT
+#if 0
 static char _rcs_id_xmalloc_h[] = "$Id: xmalloc.h,v 2.1 1999/09/10 01:24:11 mit Exp $" ;
 #endif
 

@@ -25,3 +25,11 @@ usage : lstree [options] directory ...
   environment variables
    COLUMNS : number of columns for screen/printer(see -w)
 </pre>
+
+# COMPILE
+
+## MSVC
+
+```
+$ nmake -f Make_msvc.mak nodebug=1
+```

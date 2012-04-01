@@ -21,7 +21,7 @@ extern int wild_match_charclass(/* char *wildcard, char *target */);
 static int wild_match_charclass1(/* char **wildcardp, int tc */);
 
 
-#ifdef DEBUG
+#ifdef DEBUG_SELF
 #define WILD_MATCH(w, t) debug_wild_match((w), (t))
 
 /*
@@ -59,7 +59,7 @@ wild_match(wildcard, target)
     char *wildcard;
     char *target;
 {
-#ifdef DEBUG
+#ifdef DEBUG_SELF
 #  define wild_match(w, t) debug_wild_match(w, t)
 #endif
 
@@ -167,7 +167,7 @@ wild_match_charclass1(wildcardp, tc)
     return false;
 }
 
-#ifdef DEBUG
+#ifdef DEBUG_SELF
 #define TEST(w, t, mustbe) do { \
   if (WILD_MATCH((w), (t)) == mustbe) \
     printf("OK\n"); \

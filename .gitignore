@@ -1,0 +1,4 @@
+*.obj
+*.pdb
+lstree
+lstree.exe

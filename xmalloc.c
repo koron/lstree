@@ -246,7 +246,7 @@ xmalloc_information()
     printf("current using size : %d\n", cur_total);
 }
 
-#ifdef DEBUG
+#ifdef DEBUG_SELF
 main()
 {
 #define COUNT 100

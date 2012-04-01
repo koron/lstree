@@ -2,3 +2,26 @@
 
 This repository is clone of <http://www.yk.rim.or.jp/~unya/lstree/>.
 Please refer original codes to the site.
+
+# USAGE
+
+<pre>
+usage : lstree [options] directory ...
+  options
+   -a : print all directory
+   -d : print only directory
+   -l : long print with sort by name
+   -t : long print with sort by time
+   -z : long print with sort by size
+   -r : reverse sort
+   -f pattern  : match pattern for filename
+   -F filename : pattern file
+   -w width : default 80
+   -D depth : maximum depth(&gt;=1)
+   -h : output HTML without BASE TAG
+   -H : output HTML with BASE TAG
+   -v : this message
+   -V level : Verbose(debug) mode(level 1-9)
+  environment variables
+   COLUMNS : number of columns for screen/printer(see -w)
+</pre>

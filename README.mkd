@@ -33,3 +33,9 @@ usage : lstree [options] directory ...
 ```
 $ nmake -f Make_msvc.mak nodebug=1
 ```
+
+## Compile on UNIX like system
+
+```
+$ make
+```
